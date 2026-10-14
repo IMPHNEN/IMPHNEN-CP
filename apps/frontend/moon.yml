@@ -1,6 +1,7 @@
-language: typescript
-layer: "application"
+id: 'frontend'
+language: 'typescript'
+layer: 'application'
 
 tasks:
   dev:
-    command: "npm run dev"
+    command: npm run dev
