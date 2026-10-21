@@ -5,11 +5,15 @@
   "license": "ISC",
   "author": "",
   "type": "commonjs",
-  "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "devDependencies": {
-    "@moonrepo/cli": "^2.6.1"
-  }
+    "@moonrepo/cli": "^2.6.1",
+    "typescript": "^7.0.2"
+  },
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ]
 }
