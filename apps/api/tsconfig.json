@@ -13,7 +13,11 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "moduleResolution": "bundler",
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "paths": {
+      "#/*": ["./src/*"],
+      "@/*": ["./src/*"]
+    },
   },
-  "exclude": ["node_modules", "prisma.config.ts"]
+  "exclude": ["node_modules", "prisma7.config.ts"]
 }
