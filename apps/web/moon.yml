@@ -1,4 +1,4 @@
-id: 'frontend'
+id: 'web'
 language: 'typescript'
 layer: 'application'
 
