@@ -1,3 +1,4 @@
+import "dotenv/config"
 import { serve } from '@hono/node-server'
 import { RPCHandler } from '@orpc/server/fetch'
 import { Hono } from 'hono'
@@ -5,7 +6,6 @@ import { router } from './bootstrap/router'
 import { onError } from '@orpc/server'
 import { cors } from 'hono/cors'
 import { auth } from './bootstrap/runtime'
-import "dotenv/config"
 
 const app = new Hono()
 
@@ -13,10 +13,13 @@ const handler = new RPCHandler(router, {
 	interceptors: [onError((error) => console.error(error))],
 })
 
-const corsOptions = { origin: '*', credentials: true }
+const corsOptions = {
+	origin: process.env.WEB_URL || 'http://localhost:5173',
+	credentials: true,
+}
 
 app.use('/rpc/*', cors(corsOptions))
-app.use('/api/auth', cors(corsOptions))
+app.use('/api/auth/*', cors(corsOptions))
 
 app.on(['GET', 'POST'], '/api/auth/*', (c) => auth.handler(c.req.raw))
 
