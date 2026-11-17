@@ -2,7 +2,7 @@ services:
   judgement:
     container_name: judgement
     build: 
-      dockerfile: apps/judge/dockerfile
+      dockerfile: apps/judge/Dockerfile
     
     ports:
       - "5050:5050"
