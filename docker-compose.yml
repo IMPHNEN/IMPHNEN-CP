@@ -1,0 +1,25 @@
+services:
+  judgement:
+    container_name: judgement
+    build: 
+      dockerfile: apps/judge/dockerfile
+    
+    ports:
+      -"5050:5050"
+      -"5051:5051"
+      -"5052:5052"
+
+    restart: always
+    tty: true
+
+    networks:
+      imphnen-cp:
+        ipv4_address: 127.0.0.2
+    
+networks:
+  imphnen-cp:
+    ipam:
+      driver: default
+      config:
+        - subnet: 172.120.0.0/16
+          gateway: 172.120.0.1
