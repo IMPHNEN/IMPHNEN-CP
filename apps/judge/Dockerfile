@@ -1,7 +1,7 @@
 FROM criyle/go-judge:latest as go-judge
 FROM debian:latest
 
-RUN apt update && apt upgrade
+RUN apt update -y && apt upgrade -y
 RUN apt install python g++ golang-go curl ca-certificates -y
 RUN curl -fsSL https://deb.nodesource.com/setup_24.x -o /tmp/nodesource_setup.sh \
     && bash /tmp/nodesource_setup.sh \
