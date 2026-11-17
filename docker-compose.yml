@@ -5,9 +5,9 @@ services:
       dockerfile: apps/judge/dockerfile
     
     ports:
-      -"5050:5050"
-      -"5051:5051"
-      -"5052:5052"
+      - "5050:5050"
+      - "5051:5051"
+      - "5052:5052"
 
     restart: always
     tty: true
