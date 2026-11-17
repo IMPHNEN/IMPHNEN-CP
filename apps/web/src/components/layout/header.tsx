@@ -13,7 +13,7 @@ export default function Header(
     }
 ){
     return (
-        <header className="sticky w-full top-0 border-b border-gray-400/40">
+        <header className="sticky w-full top-0 border-b border-gray-400/40 bg-white z-10">
             <div className="mx-auto max-w-7xl px-5 py-3 flex justify-between items-center">
                 <img src="/logo.webp" width={80} alt="" />
                 { !authInfo ? (
@@ -30,18 +30,20 @@ export default function Header(
                     </Button>
                 ) : (
                     <DropdownMenu>
-                        <DropdownMenuTrigger className={"cursor-pointer"} render={<div className="flex items-center gap-2 hover:bg-primary hover:text-white px-3 py-2 rounded-md" />}>
-                            <img src={authInfo.image} alt="profile" width={30} className="rounded-full"/>
-                            <h6 className="text-sm">{authInfo.name}</h6>
+                        <DropdownMenuTrigger className={"cursor-pointer"}>
+                            <div className="flex items-center gap-2 hover:bg-secondary px-3 py-2 rounded-md transition duration-300">
+                                <img src={authInfo.image} alt="profile" width={30} className="rounded-full"/>
+                                <h6 className="text-sm">{authInfo.name}</h6>
+                            </div>
                         </DropdownMenuTrigger>
                         <DropdownMenuContent className={"z-10"}>
                             <DropdownMenuGroup>
                                 <DropdownMenuItem>
-                                    <Link to={"/"}>Tantangan</Link>
+                                    <Link to={"/challenge"}>Tantangan</Link>
                                 </DropdownMenuItem>
                             </DropdownMenuGroup>
                             <DropdownMenuSeparator />
-                            <DropdownMenuItem onClick={() => {
+                            <DropdownMenuItem className={"cursor-pointer"} onClick={() => {
                                 authClient.signOut()
                                 setTimeout(() => {
                                     document.location.href = "/"

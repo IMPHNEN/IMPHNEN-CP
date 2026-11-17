@@ -9,50 +9,93 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as IndexRouteImport } from './routes/index'
+import { Route as authRouteRouteImport } from './routes/(auth)/route'
+import { Route as authChallengeRouteImport } from './routes/(auth)/challenge'
+import { Route as publicIndexRouteImport } from './routes/(public)/index'
 
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
+const authRouteRoute = authRouteRouteImport.update({
+  id: '/(auth)',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const authChallengeRoute = authChallengeRouteImport.update({
+  id: '/challenge',
+  path: '/challenge',
+  getParentRoute: () => authRouteRoute,
+} as any)
+const publicIndexRoute = publicIndexRouteImport.update({
+  id: '/(public)/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
+  '/challenge': typeof authChallengeRoute
+  '/': typeof publicIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
+  '/challenge': typeof authChallengeRoute
+  '/': typeof publicIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
+  '/(auth)': typeof authRouteRouteWithChildren
+  '/(auth)/challenge': typeof authChallengeRoute
+  '/(public)/': typeof publicIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/challenge' | '/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/challenge' | '/'
+  id: '__root__' | '/(auth)' | '/(auth)/challenge' | '/(public)/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
+  authRouteRoute: typeof authRouteRouteWithChildren
+  publicIndexRoute: typeof publicIndexRoute
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/': {
-      id: '/'
+    '/(auth)': {
+      id: '/(auth)'
+      path: ''
+      fullPath: ''
+      preLoaderRoute: typeof authRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(auth)/challenge': {
+      id: '/(auth)/challenge'
+      path: '/challenge'
+      fullPath: '/challenge'
+      preLoaderRoute: typeof authChallengeRouteImport
+      parentRoute: typeof authRouteRoute
+    }
+    '/(public)/': {
+      id: '/(public)/'
       path: '/'
       fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
+      preLoaderRoute: typeof publicIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
   }
 }
 
+interface authRouteRouteChildren {
+  authChallengeRoute: typeof authChallengeRoute
+}
+
+const authRouteRouteChildren: authRouteRouteChildren = {
+  authChallengeRoute: authChallengeRoute,
+}
+
+const authRouteRouteWithChildren = authRouteRoute._addFileChildren(
+  authRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
+  authRouteRoute: authRouteRouteWithChildren,
+  publicIndexRoute: publicIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

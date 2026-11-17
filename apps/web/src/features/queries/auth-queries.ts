@@ -5,6 +5,7 @@ import { authApi } from "../api/auth-api"
 export function authGetMeQueryOptions(){
     return queryOptions({
         queryKey: authKeys.all,
-        queryFn: authApi.me
+        queryFn: authApi.me,
+        retry: false,
     })
 }
